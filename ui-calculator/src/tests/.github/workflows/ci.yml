@@ -1,10 +1,26 @@
 name: Run Tests
-on: [push, pull_request]
+on: 
+  push: 
+    bracnches: [main]
+  pull_request:
+    bracnches: [main]
 
 jobs:
   test:
     runs-on: unbuntu-lastest
     steps: 
+    - name: checkout cide
     - uses: actsions/checkout@v3
-    - name: print 
-    run: echo "Github Actions say hello"
+
+    - name: Set up Node.js
+    - uses: actsions/setup-node@v3
+      with:
+       node-version: '18'
+    
+    - name: Install dependencies
+    - uses: npm install
+
+    - name: run test
+    - uses: npm test -- --watchALL=false
+    
+    
