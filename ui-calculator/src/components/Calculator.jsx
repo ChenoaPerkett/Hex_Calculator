@@ -4,23 +4,43 @@ const operators = ['+', '-','x','÷']
 
 const Calculator = () =>{
     const[input, setInput] = useState('');
+    const[input2, setInput2] = useState('');
     const[result, setResult] = useState('');
+    const[operator, setOperator] = useState('');
 
     const handleButtonClick = (value) =>{
-        setInput((prev)=> prev +value);
+        if(!operator){
+            setInput((prev)=> (prev +value).slice(0,2));
+        }else{
+            setInput2((prev)=> (prev +value).slice(0,2));
+        }
+    };
+
+    const handleOpClick = (op) =>{
+        if(input && !operator){
+          setOperator(op);  
+        }
+        
     };
 
     const handleClear = () =>{
         setInput('');
+        setInput2('');
+        setOperator('');
         setResult('');
+    }
+    const handleEquals = () =>{
+        setResult(`${input}${operator}${input2}`)
     }
 
     return(
-        <div>
+        <div className='calculator'>
             <h2>Hex Calculator</h2>
 
-            <div>
+            <div className='Screen'>
                 <p>Input: {input}</p>
+                <p>Operator: {operator}</p>
+                <p>Input2: {input2}</p>
                 <p>Result: {result}</p>
             </div>
 
@@ -31,12 +51,12 @@ const Calculator = () =>{
                 </button>
             ))}
             {operators.map((operator) => (
-                <button key={operator} className='operator' onClick={()=> handleButtonClick(operator)}>
+                <button key={operator} className='operator' onClick={()=> handleOpClick(operator)}>
                     {operator}
                 </button>
             ))}
             <button className='clear' onClick={handleClear}>Clear</button>
-            <button className='equals'>=</button>
+            <button className='equals'onClick={handleEquals}>=</button>
             
             </div>
 
