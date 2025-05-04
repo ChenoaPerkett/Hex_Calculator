@@ -1,0 +1,10 @@
+name: Run Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: unbuntu-lastest
+    steps: 
+    - uses: actsions/checkout@v3
+    - name: print 
+    run: echo "Github Actions say hello"

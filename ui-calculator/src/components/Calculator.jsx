@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {add ,subtract, multiply, divide} from '../math';
+import{formatOutput} from '../output';
 const digits =['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
 const operators = ['+', '-','x','÷']
 
@@ -30,7 +32,29 @@ const Calculator = () =>{
         setResult('');
     }
     const handleEquals = () =>{
-        setResult(`${input}${operator}${input2}`)
+        if(!input || !input2 || !operator){
+            setResult("incomplete input");
+            return;
+        }
+        let result;
+        switch (operator){
+            case '+':
+                result = add(input, input2);
+                break;
+            case '-':
+                result = subtract(input, input2);
+                break;
+             case 'x':
+                result = multiply(input, input2);
+                break;
+            case '÷':
+                result = divide(input, input2);
+                break;
+            default:
+                result = '';
+        }
+        
+        setResult(formatOutput(parseInt(result,16)));
     }
 
     return(
@@ -38,9 +62,7 @@ const Calculator = () =>{
             <h2>Hex Calculator</h2>
 
             <div className='Screen'>
-                <p>Input: {input}</p>
-                <p>Operator: {operator}</p>
-                <p>Input2: {input2}</p>
+                <p>Input: {input} {operator} {input2}</p>
                 <p>Result: {result}</p>
             </div>
 
